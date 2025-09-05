@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,13 +7,13 @@ import {
   StyleSheet,
   ImageBackground,
   ScrollView,
-} from 'react-native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { fetchCharacterById } from '../api';
-import { Character } from '../types';
-import type { RootStackParamList } from '../../App';
+} from "react-native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { fetchCharacterById } from "../api";
+import { Character } from "../types";
+import type { RootStackParamList } from "../../App";
 
-type Props = NativeStackScreenProps<RootStackParamList, 'CharacterDetail'>;
+type Props = NativeStackScreenProps<RootStackParamList, "CharacterDetail">;
 
 export default function CharacterDetailScreen({ route }: Props) {
   const { id } = route.params;
@@ -28,7 +28,7 @@ export default function CharacterDetailScreen({ route }: Props) {
         const c = await fetchCharacterById(id);
         setData(c);
       } catch (e: any) {
-        setError(e?.message ?? 'Erro inesperado');
+        setError(e?.message ?? "Erro inesperado");
       } finally {
         setLoading(false);
       }
@@ -47,16 +47,18 @@ export default function CharacterDetailScreen({ route }: Props) {
   if (!data || error) {
     return (
       <View style={styles.center}>
-        <Text style={styles.error}>Não foi possível carregar o personagem.</Text>
+        <Text style={styles.error}>
+          Não foi possível carregar o personagem.
+        </Text>
         {error ? <Text style={styles.muted}>{error}</Text> : null}
       </View>
     );
   }
 
-  const isDemon = (data.race ?? '').toLowerCase().includes('demon');
+  const isDemon = (data.race ?? "").toLowerCase().includes("demon");
   const bgSource = isDemon
-    ? require('../../assets/background-demon.png')
-    : require('../../assets/background-human.png');
+    ? require("../../assets/background-demon.png")
+    : require("../../assets/background-human.png");
 
   return (
     <ImageBackground source={bgSource} style={styles.bg}>
@@ -74,13 +76,13 @@ export default function CharacterDetailScreen({ route }: Props) {
           <Text style={styles.title}>{data.name}</Text>
 
           <View style={styles.chipsRow}>
-            <Chip label="Idade" value={String(data.age ?? '—')} />
-            <Chip label="Raça" value={data.race ?? '—'} />
-            <Chip label="Gênero" value={data.gender ?? '—'} />
+            <Chip label="Idade" value={String(data.age ?? "—")} />
+            <Chip label="Raça" value={data.race ?? "—"} />
+            <Chip label="Gênero" value={data.gender ?? "—"} />
           </View>
 
-          <Section title="Descrição" text={data.description ?? '—'} />
-          <Quote text={data.quote ?? '—'} />
+          <Section title="Descrição" text={data.description ?? "—"} />
+          <Quote text={data.quote ?? "—"} />
         </View>
       </ScrollView>
     </ImageBackground>
@@ -114,45 +116,41 @@ function Quote({ text }: { text: string }) {
 }
 
 const styles = StyleSheet.create({
-  bg: { flex: 1, backgroundColor: '#000' },
-
+  bg: { flex: 1, backgroundColor: "#000" },
 
   scroll: { flexGrow: 1, paddingBottom: 24 },
 
-
   header: {
     height: 260,
-    position: 'relative',
-    overflow: 'visible', // Android
-    justifyContent: 'flex-end',
+    position: "relative",
+    overflow: "visible", // Android
+    justifyContent: "flex-end",
   },
 
- 
   character: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     right: 0,
-    bottom: -30, 
+    bottom: -30,
     height: 250,
     zIndex: 3,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 
-  
   sheet: {
-    position: 'relative',
-    zIndex: 1, 
-    backgroundColor: '#fff',
+    position: "relative",
+    zIndex: 1,
+    backgroundColor: "#fff",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     marginHorizontal: 12,
     paddingHorizontal: 16,
-    paddingTop: 56,  
+    paddingTop: 56,
     paddingBottom: 16,
-    flexGrow: 1, 
+    flexGrow: 1,
 
     // sombra
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
@@ -160,55 +158,66 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 24,
-    fontWeight: '800',
-    color: '#111',
+    fontWeight: "800",
+    color: "#111",
     marginBottom: 12,
   },
 
   chipsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
     gap: 10,
     marginBottom: 12,
   },
 
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24, backgroundColor: '#000' },
-  muted: { marginTop: 8, color: '#ccc' },
-  error: { color: '#ff6b6b', textAlign: 'center' },
+  center: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+    backgroundColor: "#000",
+  },
+  muted: { marginTop: 8, color: "#ccc" },
+  error: { color: "#ff6b6b", textAlign: "center" },
 });
 
 const chipStyles = StyleSheet.create({
   item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f1f1f3',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f1f1f3",
     borderRadius: 12,
     paddingVertical: 6,
     paddingHorizontal: 10,
   },
-  label: { color: '#666', fontSize: 12, marginRight: 4 },
-  value: { color: '#c00', fontWeight: '800' },
+  label: { color: "#666", fontSize: 12, marginRight: 4 },
+  value: { color: "#c00", fontWeight: "800" },
 });
 
 const sectionStyles = StyleSheet.create({
-  block: { backgroundColor: '#fff', marginTop: 8 },
-  blockTitle: { color: '#111', fontWeight: '800', marginBottom: 6, fontSize: 14 },
-  blockText: { color: '#333', lineHeight: 20 },
+  block: { backgroundColor: "#fff", marginTop: 8 },
+  blockTitle: {
+    color: "#111",
+    fontWeight: "800",
+    marginBottom: 6,
+    fontSize: 14,
+  },
+  blockText: { color: "#333", lineHeight: 20 },
 });
 
 const quoteStyles = StyleSheet.create({
   wrap: {
     marginTop: 12,
-    backgroundColor: '#111',
+    backgroundColor: "#111",
     borderRadius: 10,
     padding: 12,
   },
   text: {
-    color: '#fff',
-    fontStyle: 'italic',
+    color: "#fff",
+    fontStyle: "italic",
     lineHeight: 20,
   },
 });
